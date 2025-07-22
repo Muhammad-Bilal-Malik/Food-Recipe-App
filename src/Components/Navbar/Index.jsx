@@ -24,12 +24,16 @@ export const Navbar = () => {
         </li>
         <li>
           <NavLink
-            to={"favourite"}
+            to={"/favourite"}
             className="text-black hover:text-gray-700 duration-300"
           >
-            favorites
+            Favorites
           </NavLink>
         </li>
+
+        <button className=" py-1 px-2 rounded font-bold text-gray-700 shadow shadow-black/20 hover:cursor-pointer hover:shadow-md transition-all duration-200">
+          <NavLink to={"/modal"}>Add New Recipe</NavLink>
+        </button>
       </ul>
     </nav>
   );
