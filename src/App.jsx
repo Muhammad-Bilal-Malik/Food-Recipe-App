@@ -4,6 +4,7 @@ import { Navbar } from "./Components/Navbar/Index";
 import { Home } from "./Pages/Home/Index";
 import { Favourite } from "./Pages/Favourite/Index";
 import { Details } from "./Pages/Details/Index";
+import { Modal } from "./Components/Modal/Index";
 function App() {
   return (
     <>
@@ -13,6 +14,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/favourite" element={<Favourite />} />
           <Route path="/recipe-item/:id" element={<Details />} />
+          <Route path="/modal" element={<Modal />} />
         </Routes>
       </div>
     </>
