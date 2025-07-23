@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { submitDetails } from "../Api";
 
-export const Modal = () => {
+export const Modal = ({ closeRecipeModal }) => {
   const [title, setTitle] = useState("");
   const [image, setImage] = useState(null);
   const [imagePreview, setImagePreview] = useState("");
   const [ingredients, setIngredients] = useState([]);
   const [ingredientName, setIngredientName] = useState("");
+  const [loading, setLoading] = useState(false);
 
   // for adding image
   const handleImageChange = (e) => {
@@ -38,8 +39,28 @@ export const Modal = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const recipeDetails = { title, image, ingredients };
+    if (ingredientName.length === 0) {
+      alert("Enter atleast one Ingredient");
+      return;
+    }
     try {
+      const formData = new FormData();
+      formData.append("image", image);
+
+      const imgbbRes = await fetch(
+        `https://api.imgbb.com/1/upload?key=56683e228e135f7f341ed44aa626df68`, // replace with your key
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+      const imgbbData = await imgbbRes.json();
+      const { url, name } = imgbbData.data.image;
+      const recipeDetails = {
+        title,
+        image: { url, name },
+        ingredients,
+      };
       const response = await submitDetails(recipeDetails);
     } catch (error) {}
 
@@ -48,12 +69,26 @@ export const Modal = () => {
   };
 
   return (
-    <div className="min-w-screen min-h-screen fixed inset-0 bg-black/80 overflow-y-auto">
-      <div className="bg-white w-2xl rounded-xl mt-5 mx-auto shadow-sm shadow-white p-6">
+    <div
+      onClick={closeRecipeModal}
+      className="min-w-screen min-h-screen fixed inset-0 bg-black/80 overflow-y-auto"
+    >
+      <div
+        onClick={(e) => e.stopPropagation()}
+        className="bg-white w-2xl rounded-xl mt-5 mx-auto shadow-sm shadow-white p-6"
+      >
+        <div className="flex justify-end">
+          <span
+            onClick={closeRecipeModal}
+            className="text-center text-red-500 hover:text-red-600 font-semibold cursor-pointer shadow-sm shadow-gray-300 px-2 rounded-sm"
+          >
+            x
+          </span>
+        </div>
         <h2 className="font-bold text-gray-800 text-2xl mb-6 text-center">
           Add New Recipe
         </h2>
-        <form action="" onSubmit={handleSubmit}>
+        <form onSubmit={(e) => handleSubmit(e)}>
           {/* Title Input */}
           <div className="mb-4">
             <label
@@ -68,7 +103,7 @@ export const Modal = () => {
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              //   required
+              required
             />
           </div>
 
@@ -83,11 +118,10 @@ export const Modal = () => {
             <input
               id="image"
               type="file"
-              //   value={image}
               accept="image/*"
               onChange={handleImageChange}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              //   required
+              required
             />
             {imagePreview && (
               <div className="mt-2">
@@ -119,17 +153,18 @@ export const Modal = () => {
               className="flex-1 w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
+
           <ul className="h-20 overflow-y-auto">
             {ingredients.map((item, index) => {
               return (
                 <li
                   key={index}
-                  className="flex items-center justify-between bg-gray-100 px-3  rounded"
+                  className="flex items-center justify-between bg-gray-100 px-3 mb-1.5 rounded"
                 >
                   <span>{item}</span>
                   <button
                     onClick={(e) => handleDelete(e, index)}
-                    className="bg-red-700 text-white w-5 h-6 flex justify-center items-end rounded px-1 hover:cursor-pointer hover:bg-red-800 transition-all duration-200 shadow-md shadow-black/20"
+                    className=" text-red-600 flex justify-center bg-transparent items-end rounded px-1 hover:cursor-pointer  transition-all duration-200 shadow-md shadow-black/20"
                   >
                     x
                   </button>
