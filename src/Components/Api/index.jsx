@@ -21,3 +21,15 @@ export const fetchRecipeDetails = async () => {
   const result = await response.json();
   return result;
 };
+
+//Single recipe details View
+
+export const fetchSingleRecipe = async (recipeid) => {
+  console.log("myid", recipeid);
+  const response = await fetch(`http://localhost:3001/recipies/${recipeid}`);
+  if (!response.ok) {
+    throw new Error(`HTTP error! status : ${response.status}`);
+  }
+  const result = await response.json();
+  return result;
+};

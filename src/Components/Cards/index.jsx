@@ -1,4 +1,24 @@
+import { useState } from "react";
+import { RecipeIngredientsModal } from "../Modal/RecipeIngredientsModal";
+import { fetchSingleRecipe } from "../Api";
+
 export const Card = ({ recipeData }) => {
+  const [ingredients, setMyIngredients] = useState();
+  console.log("ingredientsId", ingredients);
+
+  const fetchOneRecipe = async (itemid) => {
+    console.log(itemid);
+    try {
+      const response = await fetchSingleRecipe(itemid);
+      console.log("response", response);
+      setMyIngredients(response);
+    } catch (err) {
+      // setError(err);
+    } finally {
+      // setLoading(false);
+    }
+  };
+
   return (
     <div className="px-5 mt-5">
       <div className="w-52 px-2.5 rounded shadow-md ">
@@ -16,11 +36,22 @@ export const Card = ({ recipeData }) => {
           <h1 className="text-base font-semibold text-black">
             {recipeData.title}
           </h1>
-          <button className="text-sm cursor-pointer bg-gray-950 text-white py-1 px-2 rounded">
+          <button
+            onClick={() => {
+              fetchOneRecipe(recipeData.id);
+            }}
+            className="text-sm cursor-pointer bg-gray-950 text-white py-1 px-2 rounded"
+          >
             Recipe Details
           </button>
         </div>
       </div>
+      {ingredients && (
+        <RecipeIngredientsModal
+          closeModal={() => setMyIngredients()}
+          recipeDetails={ingredients}
+        />
+      )}
     </div>
   );
 };
