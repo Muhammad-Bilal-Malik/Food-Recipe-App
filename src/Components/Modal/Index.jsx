@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { submitDetails } from "../Api";
+import { Loader } from "../Loader/Loader";
 
 export const Modal = ({ closeRecipeModal }) => {
   const [title, setTitle] = useState("");
@@ -8,7 +9,6 @@ export const Modal = ({ closeRecipeModal }) => {
   const [ingredients, setIngredients] = useState([]);
   const [ingredientName, setIngredientName] = useState("");
   const [loading, setLoading] = useState(false);
-
   // for adding image
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -39,7 +39,8 @@ export const Modal = ({ closeRecipeModal }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (ingredientName.length === 0) {
+    setLoading(true);
+    if (ingredients.length === 0) {
       alert("Enter atleast one Ingredient");
       return;
     }
@@ -62,8 +63,10 @@ export const Modal = ({ closeRecipeModal }) => {
         ingredients,
       };
       const response = await submitDetails(recipeDetails);
-    } catch (error) {}
-
+    } catch (error) {
+    } finally {
+      setLoading(false);
+    }
     setTitle("");
     setImage("");
   };
@@ -180,6 +183,7 @@ export const Modal = ({ closeRecipeModal }) => {
           </button>
         </form>
       </div>
+      {loading && <Loader />}
     </div>
   );
 };
