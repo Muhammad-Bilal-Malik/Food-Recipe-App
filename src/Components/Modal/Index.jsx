@@ -1,17 +1,26 @@
 import React, { useState } from "react";
-import { submitDetails } from "../Api";
+import { submitDetails, updateRecipeIngredients } from "../Api";
 import { Loader } from "../Loader/Loader";
+import { toast } from "react-toastify";
 
-export const Modal = ({ closeRecipeModal }) => {
+export const Modal = ({
+  closeRecipeModal,
+  closeEditModal,
+  editRecipeIngredients,
+}) => {
+  // console.log("editRecipeIngredients", editRecipeIngredients.image.name);
   const [title, setTitle] = useState("");
   const [image, setImage] = useState(null);
   const [imagePreview, setImagePreview] = useState("");
   const [ingredients, setIngredients] = useState([]);
   const [ingredientName, setIngredientName] = useState("");
   const [loading, setLoading] = useState(false);
+
   // for adding image
   const handleImageChange = (e) => {
     const file = e.target.files[0];
+    console.log("file", file);
+    console.log("file", file.name);
     if (file) {
       setImage(file);
       setImagePreview(URL.createObjectURL(file));
@@ -38,6 +47,7 @@ export const Modal = ({ closeRecipeModal }) => {
   // Submiting All Data
 
   const handleSubmit = async (e) => {
+    console.log("image----", image);
     e.preventDefault();
     setLoading(true);
     if (ingredients.length === 0) {
@@ -56,13 +66,19 @@ export const Modal = ({ closeRecipeModal }) => {
         }
       );
       const imgbbData = await imgbbRes.json();
+      // const { name, size, type, webkitRelativePath } = image;
       const { url, name } = imgbbData.data.image;
       const recipeDetails = {
         title,
         image: { url, name },
         ingredients,
       };
+      // if (editRecipeIngredients.id) {
+      //   const response = await updateRecipeIngredients(editRecipeIngredients);
+      // } else {
       const response = await submitDetails(recipeDetails);
+      toast.success("Record added successfully!");
+      // }
     } catch (error) {
     } finally {
       setLoading(false);
@@ -103,7 +119,7 @@ export const Modal = ({ closeRecipeModal }) => {
             <input
               id="title"
               type="text"
-              value={title}
+              // value={editRecipeIngredients.title}
               onChange={(e) => setTitle(e.target.value)}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
@@ -135,6 +151,16 @@ export const Modal = ({ closeRecipeModal }) => {
                 />
               </div>
             )}
+
+            {!imagePreview && editRecipeIngredients && (
+              <div className="mt-2">
+                <img
+                  src={editRecipeIngredients.image.url}
+                  alt="imagePreview"
+                  className="h-32 object-cover rounded-md"
+                />
+              </div>
+            )}
           </div>
 
           {/* for Ingredient input field */}
@@ -150,7 +176,7 @@ export const Modal = ({ closeRecipeModal }) => {
             </label>
             <input
               type="text"
-              value={ingredientName}
+              // value={editRecipeIngredients.ingredients}
               placeholder="Add Ingredient Name"
               onChange={(e) => setIngredientName(e.target.value)}
               className="flex-1 w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -179,7 +205,7 @@ export const Modal = ({ closeRecipeModal }) => {
             type="submit"
             className="w-full bg-green-500 font text-white py-2 px-4 rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500"
           >
-            Save Recipe
+            {editRecipeIngredients ? "Update" : "Save"}
           </button>
         </form>
       </div>

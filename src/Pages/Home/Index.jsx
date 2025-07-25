@@ -6,7 +6,6 @@ import { fetchRecipeDetails } from "../../Components/Api";
 export const Home = () => {
   const [recipeModal, setrecipeModal] = useState(false);
   const [recipes, setRecipes] = useState([]);
-
   useEffect(() => {
     getRecipies();
   }, []);
