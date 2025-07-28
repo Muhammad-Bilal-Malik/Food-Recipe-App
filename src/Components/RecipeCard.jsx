@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { RecipeIngredientsModal } from "../Modal/RecipeIngredientsModal";
-import { deleteSingleRecipe, fetchSingleRecipe } from "../Api";
-import { DeleteModal } from "../../Components/Modal/DeleteModal";
+import { RecipeIngredientsModal } from "./Modal/RecipeIngredientsModal";
+import { deleteSingleRecipe, fetchSingleRecipe } from "./Api";
+import { DeleteModal } from "./Modal/DeleteModal";
 
-export const Card = ({ recipeData }) => {
+export const RecipeCard = ({ recipeData }) => {
   const [ingredients, setMyIngredients] = useState();
   const [deleteModal, setDeleteModal] = useState(false);
   const [deletId, setDeleteId] = useState(null);
