@@ -1,7 +1,9 @@
 import { RecipeCard } from "../RecipeCard";
 
 export const RecipeList = ({ recipes }) => {
-  if (recipes) {
+  console.log("recipes", recipes);
+  if (recipes.length === 0) {
+    console.log("recipes", recipes);
     return (
       <div className="text-center py-12">
         <div className="text-gray-400 text-6xl mb-4">🍳</div>
@@ -13,9 +15,13 @@ export const RecipeList = ({ recipes }) => {
     );
   }
   return (
-    <div>
-      {recipes.map((recipe) => {
-        return <RecipeCard />;
+    <div className="flex flex-wrap">
+      {recipes.map((recipe, i) => {
+        return (
+          <div key={i}>
+            <RecipeCard recipeData={recipe} />
+          </div>
+        );
       })}
     </div>
   );

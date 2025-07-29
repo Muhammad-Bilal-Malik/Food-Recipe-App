@@ -3,10 +3,12 @@ import { Modal } from "../../Components/Modal/Index";
 import { fetchRecipeDetails } from "../../Components/Api";
 import { FilterButton } from "../../Components/FilterButton";
 import { RecipeList } from "../../Components/Modal/RecipeList";
+import { RecipeIngredientsModal } from "../../Components/Modal/RecipeIngredientsModal";
 
 export const Home = () => {
   const [recipeModal, setrecipeModal] = useState(false);
   const [activeFilter, setActiveFilter] = useState("all");
+  const [viewRecipe, setViewRecipe] = useState(false);
   const [recipes, setRecipes] = useState([]);
   useEffect(() => {
     getRecipies();
@@ -51,6 +53,9 @@ export const Home = () => {
       </div>
 
       {recipeModal && <Modal closeRecipeModal={() => setrecipeModal(false)} />}
+      {viewRecipe && (
+        <RecipeIngredientsModal open={() => setViewRecipe(true)} />
+      )}
     </>
   );
 };
