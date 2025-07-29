@@ -1,24 +1,23 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { RecipeIngredientsModal } from "./Modal/RecipeIngredientsModal";
 import { deleteSingleRecipe, fetchSingleRecipe } from "./Api";
 import { DeleteModal } from "./Modal/DeleteModal";
 
-export const RecipeCard = ({ recipeData }) => {
-  const [ingredients, setMyIngredients] = useState();
+export const RecipeCard = ({ recipeData, open }) => {
+  // const [ingredients, setMyIngredients] = useState();
   const [deleteModal, setDeleteModal] = useState(false);
   const [deletId, setDeleteId] = useState(null);
 
-  const fetchOneRecipe = async (itemid) => {
-    try {
-      const response = await fetchSingleRecipe(itemid);
-      setMyIngredients(response);
-    } catch (err) {
-      // setError(err);
-    } finally {
-      // setLoading(false);
-    }
-  };
+  // const fetchOneRecipe = async (itemid) => {
+  //   try {
+  //     const response = await fetchSingleRecipe(itemid);
+  //     setMyIngredients(response);
+  //   } catch (err) {
+  //     // setError(err);
+  //   } finally {
+  //     // setLoading(false);
+  //   }
+  // };
 
   const deleteRecipe = async (deleteitemid) => {
     try {
@@ -33,7 +32,7 @@ export const RecipeCard = ({ recipeData }) => {
         <img
           className="rounded-md pt-2.5 w-[190px] h-[153px] object-center"
           src={
-            recipeData.image.url
+            recipeData.image
               ? recipeData.image.url
               : "https://picsum.photos/200/300"
           }
@@ -47,7 +46,8 @@ export const RecipeCard = ({ recipeData }) => {
           <div className="flex justify-between">
             <button
               onClick={() => {
-                fetchOneRecipe(recipeData.id);
+                open;
+                // fetchOneRecipe(recipeData.id);
               }}
               className="text-sm cursor-pointer bg-gray-950 text-white py-1 px-2 rounded"
             >
@@ -74,12 +74,12 @@ export const RecipeCard = ({ recipeData }) => {
           </div>
         </div>
       </div>
-      {ingredients && (
+      {/* {ingredients && (
         <RecipeIngredientsModal
           closeModal={() => setMyIngredients()}
           recipeDetails={ingredients}
         />
-      )}
+      )} */}
       {deleteModal && (
         <DeleteModal
           closeModal={() => setDeleteModal()}

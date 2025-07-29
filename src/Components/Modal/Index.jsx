@@ -8,13 +8,16 @@ export const Modal = ({
   closeEditModal,
   editRecipeIngredients,
 }) => {
-  // console.log("editRecipeIngredients", editRecipeIngredients.image.name);
-  const [title, setTitle] = useState("");
-  const [image, setImage] = useState(null);
-  const [imagePreview, setImagePreview] = useState("");
-  const [ingredients, setIngredients] = useState([]);
-  const [ingredientName, setIngredientName] = useState("");
   const [loading, setLoading] = useState(false);
+  const [recipeForm, setRecipeForm] = useState({
+    title: "",
+    image: null,
+    imagePreview: "",
+    ingredients: [],
+    ingredientName: "",
+  });
+
+  console.log("recipeForm", recipeForm);
 
   // for adding image
   const handleImageChange = (e) => {
@@ -22,26 +25,43 @@ export const Modal = ({
     console.log("file", file);
     console.log("file", file.name);
     if (file) {
-      setImage(file);
-      setImagePreview(URL.createObjectURL(file));
+      setRecipeForm((prev) => ({ ...prev, image: file }));
+      setRecipeForm((prev) => ({
+        ...prev,
+        imagePreview: URL.createObjectURL(file),
+      }));
     }
   };
 
-  // Sigle ingredient delete
+  // Sigle static ingredient delete
   const handleDelete = (e, index) => {
     e.preventDefault();
-    const updateIngredients = ingredients.filter((id, i) => i !== index); // When we delete item with index we pass two parameters
-
-    setIngredients(updateIngredients);
+    setRecipeForm((prev) => ({
+      ...prev,
+      ingredients: prev.ingredients.filter((_, i) => i !== index),
+    }));
   };
 
   // adding multiple ingredients input fields
   const addIngredients = (e) => {
     e.preventDefault();
-    if (ingredientName.trim()) {
-      setIngredients([...ingredients, ingredientName]);
-      setIngredientName("");
+    if (recipeForm.ingredientName.trim()) {
+      setRecipeForm((prev) => ({
+        ...prev,
+        ingredients: [...recipeForm.ingredients, recipeForm.ingredientName],
+        ingredientName: "",
+      }));
     }
+  };
+
+  //fill form initially
+
+  const handleFormInput = (e) => {
+    const { name, value } = e.target;
+    setRecipeForm({
+      ...recipeForm,
+      [name]: value,
+    });
   };
 
   // Submiting All Data
@@ -50,41 +70,38 @@ export const Modal = ({
     console.log("image----", image);
     e.preventDefault();
     setLoading(true);
-    if (ingredients.length === 0) {
+    if (recipeForm.ingredients.length === 0) {
       alert("Enter atleast one Ingredient");
       return;
     }
     try {
-      const formData = new FormData();
-      formData.append("image", image);
+      // const formData = new FormData();
+      // formData.append("image", image);
 
-      const imgbbRes = await fetch(
-        `https://api.imgbb.com/1/upload?key=56683e228e135f7f341ed44aa626df68`, // replace with your key
-        {
-          method: "POST",
-          body: formData,
-        }
-      );
-      const imgbbData = await imgbbRes.json();
-      // const { name, size, type, webkitRelativePath } = image;
-      const { url, name } = imgbbData.data.image;
+      // const imgbbRes = await fetch(
+      //   `https://api.imgbb.com/1/upload?key=56683e228e135f7f341ed44aa626df68`, // replace with your key
+      //   {
+      //     method: "POST",
+      //     body: formData,
+      //   }
+      // );
+      // const imgbbData = await imgbbRes.json();
+      // console.log("imgbbRes", imgbbRes);
+      // const { url, name } = imgbbData.data.image;
       const recipeDetails = {
-        title,
-        image: { url, name },
-        ingredients,
+        title: recipeForm.title,
+        image: null,
+        ingredients: recipeForm.ingredients,
       };
-      // if (editRecipeIngredients.id) {
-      //   const response = await updateRecipeIngredients(editRecipeIngredients);
-      // } else {
+
       const response = await submitDetails(recipeDetails);
+      console.log("response", response);
       toast.success("Record added successfully!");
-      // }
     } catch (error) {
     } finally {
       setLoading(false);
     }
-    setTitle("");
-    setImage("");
+    // setRecipeForm("");
   };
 
   return (
@@ -119,8 +136,9 @@ export const Modal = ({
             <input
               id="title"
               type="text"
+              name="title"
               // value={editRecipeIngredients.title}
-              onChange={(e) => setTitle(e.target.value)}
+              onChange={handleFormInput}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
@@ -142,20 +160,20 @@ export const Modal = ({
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
-            {imagePreview && (
+            {recipeForm.imagePreview && (
               <div className="mt-2">
                 <img
-                  src={imagePreview}
+                  src={recipeForm.imagePreview}
                   alt="imagePreview"
                   className="h-32 object-cover rounded-md"
                 />
               </div>
             )}
 
-            {!imagePreview && editRecipeIngredients && (
+            {!recipeForm.imagePreview && editRecipeIngredients && (
               <div className="mt-2">
                 <img
-                  src={editRecipeIngredients.image.url}
+                  // src={editRecipeIngredients.image.url}
                   alt="imagePreview"
                   className="h-32 object-cover rounded-md"
                 />
@@ -176,15 +194,16 @@ export const Modal = ({
             </label>
             <input
               type="text"
-              // value={editRecipeIngredients.ingredients}
+              value={recipeForm.ingredientName}
+              name="ingredientName"
               placeholder="Add Ingredient Name"
-              onChange={(e) => setIngredientName(e.target.value)}
+              onChange={handleFormInput}
               className="flex-1 w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
 
           <ul className="h-20 overflow-y-auto">
-            {ingredients.map((item, index) => {
+            {recipeForm.ingredients.map((item, index) => {
               return (
                 <li
                   key={index}

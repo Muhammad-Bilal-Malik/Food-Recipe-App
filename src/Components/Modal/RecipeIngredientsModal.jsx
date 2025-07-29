@@ -50,7 +50,7 @@ export const RecipeIngredientsModal = ({ closeModal, recipeDetails }) => {
         <div className="overflow-hidden flex h-[85%] gap-10">
           <img
             className="w-1/2 h-56 object-cover rounded-md"
-            src={recipeDetails.image.url}
+            src={recipeDetails.image}
             alt=""
           />
           <div className="flex flex-col w-full">

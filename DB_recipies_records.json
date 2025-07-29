@@ -1,65 +1,62 @@
 {
   "recipies": [
     {
-      "id": "b4c0",
-      "title": "Curry",
-      "image": {
-        "url": "https://i.ibb.co/DJnzSfM/stack2.jpg",
-        "name": "stack2"
-      },
+      "id": "1ae4",
+      "title": "Rice Pudding",
+      "image": null,
       "ingredients": [
-        "water",
-        "salt",
-        "oil"
-      ]
-    },
-    {
-      "id": "5997",
-      "title": "Chiken Pulao",
-      "image": {
-        "url": "https://i.ibb.co/pBfQPHXk/jj-svg.jpg",
-        "name": "jj-svg"
-      },
-      "ingredients": [
-        "Chiken",
-        "Rice"
-      ]
-    },
-    {
-      "id": "4603",
-      "title": "Pudding",
-      "image": {
-        "url": "https://i.ibb.co/7dCkJjJ5/qorma.jpg",
-        "name": "qorma"
-      },
-      "ingredients": [
+        "Rice",
         "Milk",
-        "water",
+        "Suger"
+      ]
+    },
+    {
+      "id": "0c52",
+      "title": "Biryani",
+      "image": null,
+      "ingredients": [
+        "Chicken",
         "rice"
       ]
     },
     {
-      "id": "f568",
-      "title": "asdf",
-      "image": {
-        "name": "kkk.jpeg",
-        "size": 80226,
-        "type": "image/jpeg",
-        "webkitRelativePath": ""
-      },
+      "id": "38ea",
+      "title": "Milk Shake",
+      "image": null,
       "ingredients": [
-        "asdfasdf"
+        "Milk",
+        "Fruite"
       ]
     },
     {
-      "id": "f1e3",
-      "title": "Chiken Pulaoj",
-      "image": {
-        "url": "https://i.ibb.co/Xk52nN1H/kkk.jpg",
-        "name": "kkk"
-      },
+      "id": "1f3e",
+      "title": "Beef Pulao",
+      "image": null,
       "ingredients": [
-        "asdfsdf"
+        "Beef",
+        "Rice",
+        "Salt",
+        "Onion"
+      ]
+    },
+    {
+      "id": "3938",
+      "title": "Fried Wings",
+      "image": null,
+      "ingredients": [
+        "chicken wings ",
+        "oil",
+        "oven"
+      ]
+    },
+    {
+      "id": "3bba",
+      "title": "Curry",
+      "image": null,
+      "ingredients": [
+        "Vegitable",
+        "Oil",
+        "spices"
       ]
     }
   ]

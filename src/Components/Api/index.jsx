@@ -1,4 +1,5 @@
 export const submitDetails = async (recipeInfo) => {
+  console.log("recipeInfo", recipeInfo);
   const response = await fetch(`http://localhost:3001/recipies`, {
     method: "POST",
     headers: { "Content-type": "application/json" },
