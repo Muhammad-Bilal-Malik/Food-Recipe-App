@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 
 export const Modal = ({
   closeRecipeModal,
-  closeEditModal,
+  edittingRecipe,
   editRecipeIngredients,
 }) => {
   const [loading, setLoading] = useState(false);
@@ -17,13 +17,9 @@ export const Modal = ({
     ingredientName: "",
   });
 
-  console.log("recipeForm", recipeForm);
-
   // for adding image
   const handleImageChange = (e) => {
     const file = e.target.files[0];
-    console.log("file", file);
-    console.log("file", file.name);
     if (file) {
       setRecipeForm((prev) => ({ ...prev, image: file }));
       setRecipeForm((prev) => ({
@@ -67,7 +63,6 @@ export const Modal = ({
   // Submiting All Data
 
   const handleSubmit = async (e) => {
-    console.log("image----", image);
     e.preventDefault();
     setLoading(true);
     if (recipeForm.ingredients.length === 0) {
@@ -86,7 +81,6 @@ export const Modal = ({
       //   }
       // );
       // const imgbbData = await imgbbRes.json();
-      // console.log("imgbbRes", imgbbRes);
       // const { url, name } = imgbbData.data.image;
       const recipeDetails = {
         title: recipeForm.title,
@@ -95,7 +89,6 @@ export const Modal = ({
       };
 
       const response = await submitDetails(recipeDetails);
-      console.log("response", response);
       toast.success("Record added successfully!");
     } catch (error) {
     } finally {

@@ -1,9 +1,7 @@
 import { RecipeCard } from "../RecipeCard";
 
-export const RecipeList = ({ recipes }) => {
-  console.log("recipes", recipes);
+export const RecipeList = ({ recipes, onView, onDelete }) => {
   if (recipes.length === 0) {
-    console.log("recipes", recipes);
     return (
       <div className="text-center py-12">
         <div className="text-gray-400 text-6xl mb-4">🍳</div>
@@ -19,7 +17,11 @@ export const RecipeList = ({ recipes }) => {
       {recipes.map((recipe, i) => {
         return (
           <div key={i}>
-            <RecipeCard recipeData={recipe} />
+            <RecipeCard
+              recipeData={recipe}
+              onView={onView}
+              onDelete={onDelete}
+            />
           </div>
         );
       })}

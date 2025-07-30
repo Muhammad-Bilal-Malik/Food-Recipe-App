@@ -1,9 +1,9 @@
 import React from "react";
 
-export const DeleteModal = ({ closeModal, deleteRecipe }) => {
+export const DeleteModal = ({ onClose, deleteRecipe }) => {
   return (
     <div
-      onClick={closeModal}
+      onClick={onClose}
       className="fixed inset-0 min-h-screen min-w-screen flex justify-center bg-black/90 items-center"
     >
       <div
@@ -21,7 +21,7 @@ export const DeleteModal = ({ closeModal, deleteRecipe }) => {
             Confirm
           </button>
           <button
-            onClick={closeModal}
+            onClick={onClose}
             className="shadow shadow-gray-400 px-2 py-0.5 rounded cursor-pointer"
           >
             Cancle

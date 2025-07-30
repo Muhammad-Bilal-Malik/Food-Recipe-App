@@ -1,5 +1,4 @@
 export const submitDetails = async (recipeInfo) => {
-  console.log("recipeInfo", recipeInfo);
   const response = await fetch(`http://localhost:3001/recipies`, {
     method: "POST",
     headers: { "Content-type": "application/json" },
@@ -50,7 +49,6 @@ export const deleteSingleRecipe = async (itemid) => {
 // Update record
 
 export const updateRecipeIngredients = async (info) => {
-  console.log("mydata", info);
   const response = await fetch(`http://localhost:3001/recipies/${info.id}`, {
     method: "PUT",
     headers: { "Content-type": "application/json" },
@@ -63,5 +61,4 @@ export const updateRecipeIngredients = async (info) => {
     throw new Error(`HTTP error! status : ${response.status}`);
   }
   const result = await response.json();
-  console.log("result", result);
 };

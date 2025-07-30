@@ -1,31 +1,4 @@
-import { useState } from "react";
-import { toast } from "react-toastify";
-import { deleteSingleRecipe, fetchSingleRecipe } from "./Api";
-import { DeleteModal } from "./Modal/DeleteModal";
-
-export const RecipeCard = ({ recipeData, open }) => {
-  // const [ingredients, setMyIngredients] = useState();
-  const [deleteModal, setDeleteModal] = useState(false);
-  const [deletId, setDeleteId] = useState(null);
-
-  // const fetchOneRecipe = async (itemid) => {
-  //   try {
-  //     const response = await fetchSingleRecipe(itemid);
-  //     setMyIngredients(response);
-  //   } catch (err) {
-  //     // setError(err);
-  //   } finally {
-  //     // setLoading(false);
-  //   }
-  // };
-
-  const deleteRecipe = async (deleteitemid) => {
-    try {
-      const response = await deleteSingleRecipe(deleteitemid);
-      toast.success("Item deleted successfully!");
-    } catch (error) {}
-  };
-
+export const RecipeCard = ({ recipeData, onView, onDelete }) => {
   return (
     <div className="px-5 mt-5">
       <div className="w-52 px-2.5 rounded shadow-md ">
@@ -46,8 +19,7 @@ export const RecipeCard = ({ recipeData, open }) => {
           <div className="flex justify-between">
             <button
               onClick={() => {
-                open;
-                // fetchOneRecipe(recipeData.id);
+                onView(recipeData.id);
               }}
               className="text-sm cursor-pointer bg-gray-950 text-white py-1 px-2 rounded"
             >
@@ -55,8 +27,7 @@ export const RecipeCard = ({ recipeData, open }) => {
             </button>
             <svg
               onClick={() => {
-                setDeleteModal(true);
-                setDeleteId(recipeData.id);
+                onDelete(recipeData.id);
               }}
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -74,18 +45,6 @@ export const RecipeCard = ({ recipeData, open }) => {
           </div>
         </div>
       </div>
-      {/* {ingredients && (
-        <RecipeIngredientsModal
-          closeModal={() => setMyIngredients()}
-          recipeDetails={ingredients}
-        />
-      )} */}
-      {deleteModal && (
-        <DeleteModal
-          closeModal={() => setDeleteModal()}
-          deleteRecipe={() => deleteRecipe(deletId)}
-        />
-      )}
     </div>
   );
 };
