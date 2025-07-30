@@ -1,14 +1,22 @@
 import { useState, useEffect } from "react";
+import { toast } from "react-toastify";
 import { Modal } from "../../Components/Modal/Index";
-import { fetchRecipeDetails } from "../../Components/Api";
+import {
+  deleteSingleRecipe,
+  fetchRecipeDetails,
+  fetchSingleRecipe,
+} from "../../Components/Api";
 import { FilterButton } from "../../Components/FilterButton";
 import { RecipeList } from "../../Components/Modal/RecipeList";
 import { RecipeIngredientsModal } from "../../Components/Modal/RecipeIngredientsModal";
+import { DeleteModal } from "../../Components/Modal/DeleteModal";
 
 export const Home = () => {
   const [recipeModal, setrecipeModal] = useState(false);
   const [activeFilter, setActiveFilter] = useState("all");
-  const [viewRecipe, setViewRecipe] = useState(false);
+  const [viewRecipe, setViewRecipe] = useState();
+  const [confirmDelete, setConfirmDelete] = useState();
+  const [editRecipe, setEditRecipe] = useState(null);
   const [recipes, setRecipes] = useState([]);
   useEffect(() => {
     getRecipies();
@@ -19,6 +27,29 @@ export const Home = () => {
       const response = await fetchRecipeDetails();
       setRecipes(response);
     } catch (error) {}
+  };
+
+  const fetchOneRecipe = async (itemid) => {
+    try {
+      const response = await fetchSingleRecipe(itemid);
+      setViewRecipe(response);
+    } catch (err) {
+      // setError(err);
+    } finally {
+      // setLoading(false);
+    }
+  };
+
+  const handleDeleteRecipe = async () => {
+    console.log("confirmDelete", confirmDelete);
+    try {
+      const response = await deleteSingleRecipe(confirmDelete);
+      toast.success("Item deleted successfully!");
+    } catch (error) {}
+  };
+
+  const getId = (id) => {
+    setConfirmDelete(id);
   };
 
   return (
@@ -48,13 +79,32 @@ export const Home = () => {
           </div>
         </div>
         <div className="flex items-center justify-center">
-          <RecipeList recipes={recipes} />
+          <RecipeList
+            recipes={recipes}
+            onView={fetchOneRecipe}
+            onDelete={getId}
+          />
         </div>
       </div>
 
-      {recipeModal && <Modal closeRecipeModal={() => setrecipeModal(false)} />}
+      {recipeModal && (
+        <Modal
+          closeRecipeModal={() => setrecipeModal(false)}
+          edittingRecipe={editRecipe}
+        />
+      )}
       {viewRecipe && (
-        <RecipeIngredientsModal open={() => setViewRecipe(true)} />
+        <RecipeIngredientsModal
+          recipeIngredient={viewRecipe}
+          closeModal={() => setViewRecipe()}
+          edit={handleEdit}
+        />
+      )}
+      {confirmDelete && (
+        <DeleteModal
+          onClose={() => setConfirmDelete()}
+          deleteRecipe={handleDeleteRecipe}
+        />
       )}
     </>
   );
