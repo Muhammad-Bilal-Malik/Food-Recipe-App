@@ -48,13 +48,17 @@ export const deleteSingleRecipe = async (itemid) => {
 
 // Update record
 
-export const updateRecipeIngredients = async (info) => {
-  const response = await fetch(`http://localhost:3001/recipies/${info.id}`, {
+export const updateRecipeIngredients = async (info, id) => {
+  const response = await fetch(`http://localhost:3001/recipies/${id}`, {
     method: "PUT",
     headers: { "Content-type": "application/json" },
     body: JSON.stringify({
       title: info.title,
       image: info.image,
+      ingredientName: info.ingredientName,
+      ingredients: info.ingredients,
+      cuisineType: info.cuisineType,
+      mealType: info.mealType,
     }),
   });
   if (!response.ok) {

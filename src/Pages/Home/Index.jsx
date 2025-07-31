@@ -41,7 +41,6 @@ export const Home = () => {
   };
 
   const handleDeleteRecipe = async () => {
-    console.log("confirmDelete", confirmDelete);
     try {
       const response = await deleteSingleRecipe(confirmDelete);
       toast.success("Item deleted successfully!");
@@ -50,6 +49,11 @@ export const Home = () => {
 
   const getId = (id) => {
     setConfirmDelete(id);
+  };
+
+  const fetchRecipeforUpdate = async (recipe) => {
+    setEditRecipe(recipe);
+    setViewRecipe(null);
   };
 
   return (
@@ -87,17 +91,20 @@ export const Home = () => {
         </div>
       </div>
 
-      {recipeModal && (
+      {(recipeModal || editRecipe) && (
         <Modal
-          closeRecipeModal={() => setrecipeModal(false)}
-          edittingRecipe={editRecipe}
+          closeRecipeModal={() => {
+            setEditRecipe(null);
+            setrecipeModal(null);
+          }}
+          updateRecipe={editRecipe}
         />
       )}
       {viewRecipe && (
         <RecipeIngredientsModal
           recipeIngredient={viewRecipe}
-          closeModal={() => setViewRecipe()}
-          edit={handleEdit}
+          closeModal={() => setViewRecipe(null)}
+          edit={fetchRecipeforUpdate}
         />
       )}
       {confirmDelete && (

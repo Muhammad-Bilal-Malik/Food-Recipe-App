@@ -1,53 +1,50 @@
 {
   "recipies": [
     {
-      "id": "3938",
-      "title": "Fried Wings",
-      "image": null,
+      "title": "Chaomin",
+      "image": {},
       "ingredients": [
-        "chicken wings ",
+        "spices",
         "oil",
-        "oven"
+        "vegitables"
+      ],
+      "cuisineType": "Chinese",
+      "mealType": "Snack",
+      "id": "96c7"
+    },
+    {
+      "id": "eed5",
+      "title": "HHHHH",
+      "image": null,
+      "ingredients": [
+        "aaa",
+        "5555",
+        "555"
       ]
     },
     {
-      "id": "3bba",
-      "title": "Curry",
+      "id": "755c",
+      "title": "Hello",
       "image": null,
       "ingredients": [
-        "Vegitable",
-        "Oil",
-        "spices"
-      ]
+        "jjn",
+        "das",
+        "sda"
+      ],
+      "cuisineType": "Thai"
     },
     {
-      "id": "afee",
-      "title": "Custered",
+      "id": "d07f",
+      "title": "Pallak Chicken",
       "image": null,
       "ingredients": [
-        "Milk",
-        "Custerd Powder"
-      ]
-    },
-    {
-      "id": "3419",
-      "title": "Rice Pudding",
-      "image": null,
-      "ingredients": [
-        "Milk",
-        "Suger",
-        "Rice"
-      ]
-    },
-    {
-      "id": "45bc",
-      "title": "Fry Channe",
-      "image": null,
-      "ingredients": [
-        "Channy",
-        "Oil",
-        "Spices"
-      ]
+        "lkdalkj",
+        "sdas",
+        "ass",
+        "asdas"
+      ],
+      "cuisineType": "Indian",
+      "mealType": "Lunch"
     }
   ]
 }
