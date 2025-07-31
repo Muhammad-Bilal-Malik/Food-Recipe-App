@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { submitDetails, updateRecipeIngredients } from "../Api";
 import { Loader } from "../Loader/Loader";
 import { toast } from "react-toastify";
+import { cuisineType, mealType } from "../../Utills";
 
 export const Modal = ({
   closeRecipeModal,
-  edittingRecipe,
+  updateRecipe,
   editRecipeIngredients,
 }) => {
   const [loading, setLoading] = useState(false);
@@ -13,9 +14,23 @@ export const Modal = ({
     title: "",
     image: null,
     imagePreview: "",
+    cuisineType: "Other",
+    mealType: "Dinner",
     ingredients: [],
     ingredientName: "",
   });
+
+  useEffect(() => {
+    if (updateRecipe) {
+      setRecipeForm({
+        title: updateRecipe.title,
+        image: updateRecipe.image,
+        imagePreview: "",
+        ingredients: updateRecipe.ingredients,
+        ingredientName: updateRecipe.ingredientName,
+      });
+    }
+  }, [updateRecipe]);
 
   // for adding image
   const handleImageChange = (e) => {
@@ -70,26 +85,23 @@ export const Modal = ({
       return;
     }
     try {
-      // const formData = new FormData();
-      // formData.append("image", image);
+      if (updateRecipe) {
+        const response = await updateRecipeIngredients(
+          recipeForm,
+          updateRecipe.id
+        );
+      } else {
+        const recipeDetails = {
+          title: recipeForm.title,
+          image: null,
+          ingredients: recipeForm.ingredients,
+          cuisineType: recipeForm.cuisineType,
+          mealType: recipeForm.mealType,
+        };
 
-      // const imgbbRes = await fetch(
-      //   `https://api.imgbb.com/1/upload?key=56683e228e135f7f341ed44aa626df68`, // replace with your key
-      //   {
-      //     method: "POST",
-      //     body: formData,
-      //   }
-      // );
-      // const imgbbData = await imgbbRes.json();
-      // const { url, name } = imgbbData.data.image;
-      const recipeDetails = {
-        title: recipeForm.title,
-        image: null,
-        ingredients: recipeForm.ingredients,
-      };
-
-      const response = await submitDetails(recipeDetails);
-      toast.success("Record added successfully!");
+        const response = await submitDetails(recipeDetails);
+        toast.success("Record added successfully!");
+      }
     } catch (error) {
     } finally {
       setLoading(false);
@@ -99,7 +111,10 @@ export const Modal = ({
 
   return (
     <div
-      onClick={closeRecipeModal}
+      onClick={() => {
+        closeRecipeModal();
+        console.log("first", closeRecipeModal);
+      }}
       className="min-w-screen min-h-screen fixed inset-0 bg-black/80 overflow-y-auto"
     >
       <div
@@ -124,19 +139,65 @@ export const Modal = ({
               htmlFor="title"
               className="block text-gray-700 text-sm font-bold mb-2"
             >
-              Recipe Title
+              Recipe Title *
             </label>
             <input
               id="title"
               type="text"
               name="title"
-              // value={editRecipeIngredients.title}
+              placeholder="Enter Title"
+              value={recipeForm.title}
               onChange={handleFormInput}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-300"
               required
             />
           </div>
-
+          <div className="mb-4">
+            <label
+              htmlFor="cuisineType"
+              className="block text-gray-700 text-sm font-bold mb-2"
+            >
+              Cuisine Type
+            </label>
+            <select
+              name="cuisineType"
+              value={recipeForm.cuisineType}
+              onChange={handleFormInput}
+              id="cuisineType"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-300"
+            >
+              {cuisineType.map((cuisine, i) => {
+                return (
+                  <option key={i} value={cuisine}>
+                    {cuisine}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
+          <div className="mb-4">
+            <label
+              htmlFor="cuisineType"
+              className="block text-gray-700 text-sm font-bold mb-2"
+            >
+              Meal Type
+            </label>
+            <select
+              name="mealType"
+              value={recipeForm.mealType}
+              onChange={handleFormInput}
+              id="mealType"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-300"
+            >
+              {mealType.map((meal, i) => {
+                return (
+                  <option key={i} value={meal}>
+                    {meal}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
           {/* Image Input */}
           <div className="mb-4">
             <label
@@ -150,7 +211,7 @@ export const Modal = ({
               type="file"
               accept="image/*"
               onChange={handleImageChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-300"
               required
             />
             {recipeForm.imagePreview && (
@@ -166,7 +227,7 @@ export const Modal = ({
             {!recipeForm.imagePreview && editRecipeIngredients && (
               <div className="mt-2">
                 <img
-                  // src={editRecipeIngredients.image.url}
+                  src={recipeForm.image.url}
                   alt="imagePreview"
                   className="h-32 object-cover rounded-md"
                 />
@@ -180,7 +241,7 @@ export const Modal = ({
               Ingredients
               <button
                 onClick={addIngredients}
-                className="mt-2 bg-blue-500 text-white px-3 py-1 rounded-md hover:bg-blue-600 text-sm"
+                className="mt-2 bg-orange-100 text-orange-800 px-3 py-1 rounded-md hover:bg-orange-200 text-sm transition-colors duration-300"
               >
                 + Add Ingredient
               </button>
@@ -191,7 +252,7 @@ export const Modal = ({
               name="ingredientName"
               placeholder="Add Ingredient Name"
               onChange={handleFormInput}
-              className="flex-1 w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="flex-1 w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-300"
             />
           </div>
 
@@ -215,9 +276,9 @@ export const Modal = ({
           </ul>
           <button
             type="submit"
-            className="w-full bg-green-500 font text-white py-2 px-4 rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500"
+            className="w-full bg-orange-500 font text-white py-2 px-4 rounded-md hover:bg-orange-600 focus:outline-none "
           >
-            {editRecipeIngredients ? "Update" : "Save"}
+            {updateRecipe ? "Update" : "Save"}
           </button>
         </form>
       </div>

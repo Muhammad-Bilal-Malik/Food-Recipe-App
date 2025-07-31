@@ -12,7 +12,14 @@ export const RecipeCard = ({ recipeData, onView, onDelete }) => {
           alt=""
         />
         <div className="py-2.5">
-          <p className="text-xs">Pakistani Recipe</p>
+          <p className="text-xs flex gap-1.5">
+            <span className="bg-orange-100 text-orange-800 rounded-full px-2 py-1">
+              {recipeData.cuisineType}
+            </span>
+            <span className="bg-green-100 text-green-800 rounded-full px-2 py-1">
+              {recipeData.mealType}
+            </span>
+          </p>
           <h1 className="text-base font-semibold text-black">
             {recipeData.title}
           </h1>
