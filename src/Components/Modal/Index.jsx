@@ -113,7 +113,6 @@ export const Modal = ({
     <div
       onClick={() => {
         closeRecipeModal();
-        console.log("first", closeRecipeModal);
       }}
       className="min-w-screen min-h-screen fixed inset-0 bg-black/80 overflow-y-auto"
     >

@@ -18,14 +18,16 @@ export const Home = () => {
   const [confirmDelete, setConfirmDelete] = useState();
   const [editRecipe, setEditRecipe] = useState(null);
   const [recipes, setRecipes] = useState([]);
+  const [search, setSearch] = useState();
+  const [filteredRecipe, setFilteredRecipe] = useState([]);
   useEffect(() => {
     getRecipies();
   }, []);
-
   const getRecipies = async () => {
     try {
       const response = await fetchRecipeDetails();
       setRecipes(response);
+      setFilteredRecipe(response);
     } catch (error) {}
   };
 
@@ -51,6 +53,27 @@ export const Home = () => {
     setConfirmDelete(id);
   };
 
+  const handleSearch = (e) => {
+    setSearch(e.target.value);
+    const filteredProducts = recipes.filter((recipe) =>
+      recipe.title.toLowerCase().includes(search.toLowerCase())
+    );
+    if (e.target.value) {
+      setRecipes(filteredProducts);
+    } else {
+      getRecipies();
+    }
+  };
+
+  const handleMealFilter = (label) => {
+    if (label === "All Recipes") {
+      setFilteredRecipe(recipes);
+      return;
+    }
+    const filteredMeal = recipes.filter((recipe) => recipe.mealType === label);
+    setFilteredRecipe(filteredMeal);
+  };
+
   const fetchRecipeforUpdate = async (recipe) => {
     setEditRecipe(recipe);
     setViewRecipe(null);
@@ -71,6 +94,7 @@ export const Home = () => {
         <div className="flex justify-between items-center mt-6 px-5 font-semibold">
           <input
             type="text"
+            onChange={handleSearch}
             name="search"
             placeholder="Search recipes, ingredients, or cuisine..."
             className="bg-white/75 p-3 px-8 rounded-md outline-none border border-gray-200 lg:w-lg"
@@ -79,12 +103,13 @@ export const Home = () => {
             <FilterButton
               activeFilter={activeFilter}
               onFilterChange={setActiveFilter}
+              mealFilter={handleMealFilter}
             />
           </div>
         </div>
         <div className="flex items-center justify-center">
           <RecipeList
-            recipes={recipes}
+            recipes={filteredRecipe}
             onView={fetchOneRecipe}
             onDelete={getId}
           />

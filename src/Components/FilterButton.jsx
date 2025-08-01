@@ -1,12 +1,15 @@
 import { filters } from "../Utills";
-export const FilterButton = ({ activeFilter, onFilterChange }) => {
+export const FilterButton = ({ activeFilter, onFilterChange, mealFilter }) => {
   return (
     <div className="flex gap-10">
       {filters.map((filter, i) => {
         return (
           <button
             key={i}
-            onClick={() => onFilterChange(filter.id)}
+            onClick={() => {
+              onFilterChange(filter.id);
+              mealFilter(filter.lable);
+            }}
             className={`text-lg border cursor-pointer shadow px-4 py-2 font-medium rounded-full transition-all duration-300 ${
               activeFilter === filter.id
                 ? `bg-orange-500 text-white shadow-lg`
