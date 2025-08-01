@@ -9,29 +9,21 @@
         "vegitables"
       ],
       "cuisineType": "Chinese",
-      "mealType": "Snack",
+      "mealType": "Breakfast",
       "id": "96c7"
     },
     {
-      "id": "eed5",
-      "title": "HHHHH",
-      "image": null,
+      "title": "Mutten Nihari",
+      "image": {},
+      "ingredientName": "",
       "ingredients": [
-        "aaa",
-        "5555",
-        "555"
-      ]
-    },
-    {
-      "id": "755c",
-      "title": "Hello",
-      "image": null,
-      "ingredients": [
-        "jjn",
-        "das",
-        "sda"
+        "Mutton",
+        "Oil",
+        "Spices"
       ],
-      "cuisineType": "Thai"
+      "cuisineType": "Indian",
+      "mealType": "Breakfast",
+      "id": "755c"
     },
     {
       "id": "d07f",
@@ -45,6 +37,19 @@
       ],
       "cuisineType": "Indian",
       "mealType": "Lunch"
+    },
+    {
+      "id": "2e11",
+      "title": "Egg fried",
+      "image": null,
+      "ingredients": [
+        "Egg",
+        "oil",
+        "salt",
+        "Black Pipper"
+      ],
+      "cuisineType": "Japanese",
+      "mealType": "Breakfast"
     }
   ]
 }
