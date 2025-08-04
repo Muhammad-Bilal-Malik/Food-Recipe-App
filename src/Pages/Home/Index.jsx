@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { toast } from "react-toastify";
 import { Modal } from "../../Components/Modal/Index";
 import {
@@ -10,16 +10,21 @@ import { FilterButton } from "../../Components/FilterButton";
 import { RecipeList } from "../../Components/Modal/RecipeList";
 import { RecipeIngredientsModal } from "../../Components/Modal/RecipeIngredientsModal";
 import { DeleteModal } from "../../Components/Modal/DeleteModal";
-
+import { UserContext } from "../../Context/ContextApi";
 export const Home = () => {
-  const [recipeModal, setrecipeModal] = useState(false);
-  const [activeFilter, setActiveFilter] = useState("all");
-  const [viewRecipe, setViewRecipe] = useState();
   const [confirmDelete, setConfirmDelete] = useState();
-  const [editRecipe, setEditRecipe] = useState(null);
   const [recipes, setRecipes] = useState([]);
+  console.log("recipes", recipes);
   const [search, setSearch] = useState();
-  const [filteredRecipe, setFilteredRecipe] = useState([]);
+  const {
+    recipeModal,
+    setrecipeModal,
+    editRecipe,
+    setEditRecipe,
+    viewRecipe,
+    setViewRecipe,
+    setFilteredRecipe,
+  } = useContext(UserContext);
   useEffect(() => {
     getRecipies();
   }, []);
@@ -59,7 +64,7 @@ export const Home = () => {
       recipe.title.toLowerCase().includes(search.toLowerCase())
     );
     if (e.target.value) {
-      setRecipes(filteredProducts);
+      setFilteredRecipe(filteredProducts);
     } else {
       getRecipies();
     }
@@ -100,19 +105,11 @@ export const Home = () => {
             className="bg-white/75 p-3 px-8 rounded-md outline-none border border-gray-200 lg:w-lg"
           />
           <div>
-            <FilterButton
-              activeFilter={activeFilter}
-              onFilterChange={setActiveFilter}
-              mealFilter={handleMealFilter}
-            />
+            <FilterButton mealFilter={handleMealFilter} />
           </div>
         </div>
         <div className="flex items-center justify-center">
-          <RecipeList
-            recipes={filteredRecipe}
-            onView={fetchOneRecipe}
-            onDelete={getId}
-          />
+          <RecipeList onView={fetchOneRecipe} onDelete={getId} />
         </div>
       </div>
 
@@ -122,12 +119,10 @@ export const Home = () => {
             setEditRecipe(null);
             setrecipeModal(null);
           }}
-          updateRecipe={editRecipe}
         />
       )}
       {viewRecipe && (
         <RecipeIngredientsModal
-          recipeIngredient={viewRecipe}
           closeModal={() => setViewRecipe(null)}
           edit={fetchRecipeforUpdate}
         />

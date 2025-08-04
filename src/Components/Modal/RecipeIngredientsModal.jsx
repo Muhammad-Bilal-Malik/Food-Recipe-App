@@ -1,8 +1,7 @@
-export const RecipeIngredientsModal = ({
-  closeModal,
-  recipeIngredient,
-  edit,
-}) => {
+import { useContext } from "react";
+import { UserContext } from "../../Context/ContextApi";
+export const RecipeIngredientsModal = ({ closeModal, edit }) => {
+  const { viewRecipe } = useContext(UserContext);
   return (
     <div
       onClick={closeModal}
@@ -20,7 +19,7 @@ export const RecipeIngredientsModal = ({
               fill="currentColor"
               className="size-6 cursor-pointer"
               onClick={() => {
-                edit(recipeIngredient);
+                edit(viewRecipe);
               }}
             >
               <path d="M21.731 2.269a2.625 2.625 0 0 0-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 0 0 0-3.712ZM19.513 8.199l-3.712-3.712-12.15 12.15a5.25 5.25 0 0 0-1.32 2.214l-.8 2.685a.75.75 0 0 0 .933.933l2.685-.8a5.25 5.25 0 0 0 2.214-1.32L19.513 8.2Z" />
@@ -48,18 +47,18 @@ export const RecipeIngredientsModal = ({
           <img
             className="w-1/2 h-56 object-cover rounded-md"
             src={
-              recipeIngredient.image
-                ? recipeIngredient.image.url
+              viewRecipe.image
+                ? viewRecipe.image.url
                 : "https://picsum.photos/200/300"
             }
             alt=""
           />
           <div className="flex flex-col w-full">
             <h3 className="text-sm ">European Dish</h3>
-            <h1 className=" font-semibold">{recipeIngredient.title}</h1>
+            <h1 className=" font-semibold">{viewRecipe.title}</h1>
             <h2 className="font-bold">Ingredients</h2>
             <ul className="list-disc overflow-y-auto pl-5">
-              {recipeIngredient.ingredients.map((item, i) => {
+              {viewRecipe.ingredients.map((item, i) => {
                 return (
                   <div key={i}>
                     <li>{item}</li>
@@ -68,12 +67,6 @@ export const RecipeIngredientsModal = ({
               })}
             </ul>
           </div>
-          {/* {editRecipe && (
-            <Modal
-              closeEditModal={() => setEditRecipe(false)}
-              editRecipeIngredients={editIngredients}
-            />
-          )} */}
         </div>
       </div>
     </div>
