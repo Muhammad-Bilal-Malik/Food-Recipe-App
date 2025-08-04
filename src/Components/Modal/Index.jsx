@@ -1,14 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { submitDetails, updateRecipeIngredients } from "../Api";
 import { Loader } from "../Loader/Loader";
 import { toast } from "react-toastify";
 import { cuisineType, mealType } from "../../Utills";
+import { UserContext } from "../../Context/ContextApi";
 
-export const Modal = ({
-  closeRecipeModal,
-  updateRecipe,
-  editRecipeIngredients,
-}) => {
+export const Modal = ({ closeRecipeModal, editRecipeIngredients }) => {
+  const { editRecipe } = useContext(UserContext);
+  console.log("editRecipe", editRecipe);
   const [loading, setLoading] = useState(false);
   const [recipeForm, setRecipeForm] = useState({
     title: "",
@@ -21,16 +20,18 @@ export const Modal = ({
   });
 
   useEffect(() => {
-    if (updateRecipe) {
+    if (editRecipe) {
       setRecipeForm({
-        title: updateRecipe.title,
-        image: updateRecipe.image,
+        title: editRecipe.title,
+        image: editRecipe.image,
         imagePreview: "",
-        ingredients: updateRecipe.ingredients,
-        ingredientName: updateRecipe.ingredientName,
+        cuisineType: editRecipe.cuisineType,
+        mealType: editRecipe.mealType,
+        ingredients: editRecipe.ingredients,
+        ingredientName: editRecipe.ingredientName,
       });
     }
-  }, [updateRecipe]);
+  }, [editRecipe]);
 
   // for adding image
   const handleImageChange = (e) => {
@@ -85,10 +86,10 @@ export const Modal = ({
       return;
     }
     try {
-      if (updateRecipe) {
+      if (editRecipe) {
         const response = await updateRecipeIngredients(
           recipeForm,
-          updateRecipe.id
+          editRecipe.id
         );
       } else {
         const recipeDetails = {
@@ -106,7 +107,6 @@ export const Modal = ({
     } finally {
       setLoading(false);
     }
-    // setRecipeForm("");
   };
 
   return (
@@ -277,7 +277,7 @@ export const Modal = ({
             type="submit"
             className="w-full bg-orange-500 font text-white py-2 px-4 rounded-md hover:bg-orange-600 focus:outline-none "
           >
-            {updateRecipe ? "Update" : "Save"}
+            {editRecipe ? "Update" : "Save"}
           </button>
         </form>
       </div>

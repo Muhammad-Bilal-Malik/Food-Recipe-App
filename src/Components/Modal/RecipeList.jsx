@@ -1,7 +1,9 @@
 import { RecipeCard } from "../RecipeCard";
-
-export const RecipeList = ({ recipes, onView, onDelete }) => {
-  if (recipes.length === 0) {
+import { UserContext } from "../../Context/ContextApi";
+import { useContext } from "react";
+export const RecipeList = ({ onView, onDelete }) => {
+  const { filteredRecipe } = useContext(UserContext);
+  if (filteredRecipe.length === 0) {
     return (
       <div className="text-center py-12">
         <div className="text-gray-400 text-6xl mb-4">🍳</div>
@@ -14,7 +16,7 @@ export const RecipeList = ({ recipes, onView, onDelete }) => {
   }
   return (
     <div className="flex flex-wrap">
-      {recipes.map((recipe, i) => {
+      {filteredRecipe.map((recipe, i) => {
         return (
           <div key={i}>
             <RecipeCard

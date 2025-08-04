@@ -1,5 +1,8 @@
+import { useContext } from "react";
 import { filters } from "../Utills";
-export const FilterButton = ({ activeFilter, onFilterChange, mealFilter }) => {
+import { UserContext } from "../Context/ContextApi";
+export const FilterButton = ({ mealFilter }) => {
+  const { activeFilter, setActiveFilter } = useContext(UserContext);
   return (
     <div className="flex gap-10">
       {filters.map((filter, i) => {
@@ -7,7 +10,7 @@ export const FilterButton = ({ activeFilter, onFilterChange, mealFilter }) => {
           <button
             key={i}
             onClick={() => {
-              onFilterChange(filter.id);
+              setActiveFilter(filter.id);
               mealFilter(filter.lable);
             }}
             className={`text-lg border cursor-pointer shadow px-4 py-2 font-medium rounded-full transition-all duration-300 ${
