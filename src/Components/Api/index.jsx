@@ -19,7 +19,8 @@ export const fetchRecipeDetails = async () => {
     throw new Error(`HTTP error! Status : ${response.status}`);
   }
   const result = await response.json();
-  return result;
+  const sortedItems = result.sort((a, b) => a.title.localeCompare(b.title));
+  return sortedItems;
 };
 
 //Single recipe details View

@@ -1,7 +1,8 @@
 import { useContext } from "react";
 import { UserContext } from "../../Context/ContextApi";
 export const RecipeIngredientsModal = ({ closeModal, edit }) => {
-  const { viewRecipe } = useContext(UserContext);
+  const { viewRecipe, recipes } = useContext(UserContext);
+  console.log("recipiesArray", recipes);
   return (
     <div
       onClick={closeModal}

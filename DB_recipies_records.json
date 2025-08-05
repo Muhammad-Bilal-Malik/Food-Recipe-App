@@ -1,7 +1,7 @@
 {
   "recipies": [
     {
-      "title": "Chaomin",
+      "title": "Chaomin chaomiin",
       "image": {},
       "ingredients": [
         "spices",
@@ -52,18 +52,17 @@
       "mealType": "Breakfast"
     },
     {
-      "title": "Dall Roti naan",
-      "image": {},
-      "ingredientName": "",
+      "id": "26a4",
+      "title": "Alu Gosht",
+      "image": null,
       "ingredients": [
-        "Dall",
-        "roti",
-        "raita",
-        "salled",
-        "lemon",
+        "Alo",
+        "Ghost",
+        "Spices",
         "water"
       ],
-      "id": "0191"
+      "cuisineType": "Indian",
+      "mealType": "Dinner"
     }
   ]
 }
