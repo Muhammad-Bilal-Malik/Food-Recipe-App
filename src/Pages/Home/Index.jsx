@@ -13,8 +13,6 @@ import { DeleteModal } from "../../Components/Modal/DeleteModal";
 import { UserContext } from "../../Context/ContextApi";
 export const Home = () => {
   const [confirmDelete, setConfirmDelete] = useState();
-  const [recipes, setRecipes] = useState([]);
-  console.log("recipes", recipes);
   const [search, setSearch] = useState();
   const {
     recipeModal,
@@ -24,6 +22,8 @@ export const Home = () => {
     viewRecipe,
     setViewRecipe,
     setFilteredRecipe,
+    recipes,
+    setRecipes,
   } = useContext(UserContext);
   useEffect(() => {
     getRecipies();
@@ -89,6 +89,8 @@ export const Home = () => {
       <div>
         <header className="flex justify-between items-center px-5 top-0 h-14 shadow-md shadow-gray-200 ">
           <h2 className="text-2xl font-bold">Food Recipe</h2>
+          <button>Sign Up</button>
+          <button>Login</button>
           <button
             onClick={() => setrecipeModal(true)}
             className=" py-1.5 px-3 rounded-md bg-orange-500 text-white shadow-md shadow-black/20 hover:cursor-pointer"

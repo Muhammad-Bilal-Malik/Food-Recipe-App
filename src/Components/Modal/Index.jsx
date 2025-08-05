@@ -7,7 +7,6 @@ import { UserContext } from "../../Context/ContextApi";
 
 export const Modal = ({ closeRecipeModal, editRecipeIngredients }) => {
   const { editRecipe } = useContext(UserContext);
-  console.log("editRecipe", editRecipe);
   const [loading, setLoading] = useState(false);
   const [recipeForm, setRecipeForm] = useState({
     title: "",
