@@ -1,6 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 
 export const Login = () => {
+  const [loginInfo, setLoginInfo] = useState({
+    email: "",
+    password: "",
+  });
+  console.log("loginInfo", loginInfo);
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    console.log("first");
+  };
   return (
     <div className="bg-gray-100 min-h-screen flex items-center justify-center">
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
@@ -14,7 +23,7 @@ export const Login = () => {
         <form className="space-y-6">
           <div>
             <label
-              for="email"
+              htmlFor="email"
               className="block text-sm font-medium text-gray-700 mb-1"
             >
               Email Address
@@ -24,6 +33,9 @@ export const Login = () => {
                 {/* <i className="fas fa-envelope text-gray-400"></i> */}
               </div>
               <input
+                onChange={(e) =>
+                  setLoginInfo((prev) => ({ ...prev, email: e.target.value }))
+                }
                 type="email"
                 id="email"
                 name="email"
@@ -36,7 +48,7 @@ export const Login = () => {
 
           <div>
             <label
-              for="password"
+              htmlFor="password"
               className="block text-sm font-medium text-gray-700 mb-1"
             >
               Password
@@ -46,6 +58,12 @@ export const Login = () => {
                 {/* <i className="fas fa-lock text-gray-400"></i> */}
               </div>
               <input
+                onChange={(e) =>
+                  setLoginInfo((prev) => ({
+                    ...prev,
+                    password: e.target.value,
+                  }))
+                }
                 type="password"
                 id="password"
                 name="password"
@@ -72,6 +90,7 @@ export const Login = () => {
 
           <div>
             <button
+              onClick={handleLogin}
               type="submit"
               className="w-full bg-orange-500 hover:bg-orange-600 text-white font-medium py-2 px-4 rounded-md transition duration-300 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2"
             >

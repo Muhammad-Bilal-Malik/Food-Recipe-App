@@ -1,20 +1,20 @@
 import "./App.css";
-import UserProvider from "./Context/ContextApi";
+import { Routes, Route } from "react-router-dom";
 import { Home } from "./Pages/Home/Index";
-import { ToastContainer } from "react-toastify";
 import { Login } from "./Pages/Login";
 import { SignUp } from "./Pages/SignUp";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   return (
     <>
       <div className="min-h-screen bg-white text-gray-600 text-lg">
-        <UserProvider>
-          <Home />
-          <Login />
-          <SignUp />
-          <ToastContainer />
-        </UserProvider>
+        <ToastContainer />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<SignUp />} />
+        </Routes>
       </div>
     </>
   );

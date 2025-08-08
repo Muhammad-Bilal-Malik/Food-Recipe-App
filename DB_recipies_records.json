@@ -3,11 +3,7 @@
     {
       "title": "Chaomin chaomiin",
       "image": {},
-      "ingredients": [
-        "spices",
-        "oil",
-        "vegitables"
-      ],
+      "ingredients": ["spices", "oil", "vegitables"],
       "cuisineType": "Chinese",
       "mealType": "Breakfast",
       "id": "96c7"
@@ -16,11 +12,7 @@
       "title": "Mutten Nihari",
       "image": {},
       "ingredientName": "",
-      "ingredients": [
-        "Mutton",
-        "Oil",
-        "Spices"
-      ],
+      "ingredients": ["Mutton", "Oil", "Spices"],
       "cuisineType": "Indian",
       "mealType": "Breakfast",
       "id": "755c"
@@ -29,12 +21,7 @@
       "id": "d07f",
       "title": "Pallak Chicken",
       "image": null,
-      "ingredients": [
-        "lkdalkj",
-        "sdas",
-        "ass",
-        "asdas"
-      ],
+      "ingredients": ["lkdalkj", "sdas", "ass", "asdas"],
       "cuisineType": "Indian",
       "mealType": "Lunch"
     },
@@ -42,12 +29,7 @@
       "id": "2e11",
       "title": "Egg fried",
       "image": null,
-      "ingredients": [
-        "Egg",
-        "oil",
-        "salt",
-        "Black Pipper"
-      ],
+      "ingredients": ["Egg", "oil", "salt", "Black Pipper"],
       "cuisineType": "Japanese",
       "mealType": "Breakfast"
     },
@@ -55,14 +37,22 @@
       "id": "26a4",
       "title": "Alu Gosht",
       "image": null,
-      "ingredients": [
-        "Alo",
-        "Ghost",
-        "Spices",
-        "water"
-      ],
+      "ingredients": ["Alo", "Ghost", "Spices", "water"],
       "cuisineType": "Indian",
       "mealType": "Dinner"
+    }
+  ],
+  "users": [
+    {
+      "id": "7305",
+      "firstName": "Muhammad",
+      "lastName": "Bilal",
+      "gender": "male",
+      "email": "mb2094658@gmail.com",
+      "username": "Muhammad-Bilal-Malik",
+      "password": "123456",
+      "confirmPassword": "123456",
+      "terms": "on"
     }
   ]
 }

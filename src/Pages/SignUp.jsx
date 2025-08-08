@@ -1,6 +1,23 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { signupUserInfo } from "../Components/Api/UsersInfo";
 
 export const SignUp = () => {
+  const [signupInput, setSignupInput] = useState({
+    firstName: "",
+    lastName: "",
+    gender: "",
+    email: "",
+    username: "",
+    password: "",
+    confirmPassword: "",
+    terms: "",
+  });
+
+  const handleCreateAccount = async (e) => {
+    e.preventDefault();
+    const response = await signupUserInfo(signupInput);
+  };
+
   return (
     <div className="bg-gray-100 min-h-screen flex items-center justify-center p-4">
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
@@ -23,6 +40,12 @@ export const SignUp = () => {
                   <i className="fas fa-user text-gray-400"></i>
                 </div>
                 <input
+                  onChange={(e) =>
+                    setSignupInput((prev) => ({
+                      ...prev,
+                      firstName: e.target.value,
+                    }))
+                  }
                   type="text"
                   id="firstName"
                   name="firstName"
@@ -45,6 +68,12 @@ export const SignUp = () => {
                   <i className="fas fa-user text-gray-400"></i>
                 </div>
                 <input
+                  onChange={(e) =>
+                    setSignupInput((prev) => ({
+                      ...prev,
+                      lastName: e.target.value,
+                    }))
+                  }
                   type="text"
                   id="lastName"
                   name="lastName"
@@ -64,6 +93,9 @@ export const SignUp = () => {
               Gender
             </label>
             <select
+              onChange={(e) =>
+                setSignupInput((prev) => ({ ...prev, gender: e.target.value }))
+              }
               id="gender"
               name="gender"
               className="w-full pl-3 pr-3 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-300 focus:border-orange-300"
@@ -88,6 +120,9 @@ export const SignUp = () => {
                 {/* <i className="fas fa-envelope text-gray-400"></i> */}
               </div>
               <input
+                onChange={(e) =>
+                  setSignupInput((prev) => ({ ...prev, email: e.target.value }))
+                }
                 type="email"
                 id="email"
                 name="email"
@@ -110,6 +145,12 @@ export const SignUp = () => {
                 {/* <i className="fas fa-at text-gray-400"></i> */}
               </div>
               <input
+                onChange={(e) =>
+                  setSignupInput((prev) => ({
+                    ...prev,
+                    username: e.target.value,
+                  }))
+                }
                 type="text"
                 id="username"
                 name="username"
@@ -132,6 +173,12 @@ export const SignUp = () => {
                 {/* <i className="fas fa-lock text-gray-400"></i> */}
               </div>
               <input
+                onChange={(e) =>
+                  setSignupInput((prev) => ({
+                    ...prev,
+                    password: e.target.value,
+                  }))
+                }
                 type="password"
                 id="password"
                 name="password"
@@ -160,6 +207,12 @@ export const SignUp = () => {
                 {/* <i className="fas fa-lock text-gray-400"></i> */}
               </div>
               <input
+                onChange={(e) =>
+                  setSignupInput((prev) => ({
+                    ...prev,
+                    confirmPassword: e.target.value,
+                  }))
+                }
                 type="password"
                 id="confirmPassword"
                 name="confirmPassword"
@@ -178,6 +231,9 @@ export const SignUp = () => {
 
           <div className="flex items-center">
             <input
+              onChange={(e) =>
+                setSignupInput((prev) => ({ ...prev, terms: e.target.value }))
+              }
               type="checkbox"
               id="terms"
               name="terms"
@@ -194,6 +250,7 @@ export const SignUp = () => {
 
           <div>
             <button
+              onClick={(e) => handleCreateAccount(e)}
               type="submit"
               className="w-full cursor-pointer bg-orange-500 hover:bg-orange-600 text-white font-medium py-2 px-4 rounded-md transition duration-300 focus:outline-none focus:ring-2 focus:ring-orange-300 focus:ring-offset-2"
             >
